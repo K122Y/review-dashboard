@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股每日仪表盘</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #0d1117;
+    color: #e6edf3;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #f0f6fc;
+  }
+  .date {
+    font-size: 14px;
+    color: #8b949e;
+    margin-bottom: 28px;
+  }
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 18px;
+  }
+  .card-title {
+    font-size: 13px;
+    color: #8b949e;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+  .big-number {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .change {
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 12px;
+  }
+  .up { color: #f85149; }     /* A股习惯：涨红 */
+  .down { color: #3fb950; }   /* 跌绿 */
+  .flat { color: #8b949e; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .stat {
+    background: #0d1117;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-label { font-size: 12px; color: #8b949e; margin-bottom: 6px; }
+  .stat-value { font-size: 24px; font-weight: 700; }
+  .footer {
+    margin-top: 30px;
+    font-size: 12px;
+    color: #484f58;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📈 A股每日仪表盘</h1>
+  <div class="date">数据日期：{{ date }}</div>
+
+  <!-- 上证指数 -->
+  <div class="card">
+    <div class="card-title">上证指数</div>
+    <div>
+      <span class="big-number">{{ sh_close }}</span>
+      <span class="change {{ sh_class }}">{{ sh_change }}%</span>
+    </div>
+    <div style="margin-top:14px; font-size:14px; color:#8b949e;">
+      成交额：{{ sh_amount }} 亿元
+    </div>
+  </div>
+
+  <!-- 涨跌家数 -->
+  <div class="card">
+    <div class="card-title">市场涨跌分布</div>
+    <div class="grid">
+      <div class="stat">
+        <div class="stat-label">上涨家数</div>
+        <div class="stat-value up">{{ up_count }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">下跌家数</div>
+        <div class="stat-value down">{{ down_count }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">平盘家数</div>
+        <div class="stat-value flat">{{ flat_count }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">本页面数据每日自动更新，仅供参考，不构成投资建议。</div>
+</div>
+</body>
+</html>
