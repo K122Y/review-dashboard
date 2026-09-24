@@ -2,7 +2,7 @@ name: 每日A股仪表盘更新
 
 on:
   schedule:
-    - cron: '0 10 * * 1-5'
+    - cron: '0 8 * * 1-5'
   workflow_dispatch:
 
 jobs:
@@ -21,6 +21,13 @@ jobs:
         run: |
           python fetch_data.py
           python render_page.py
+      - name: 保存历史数据并部署
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add history.json index.html
+          git commit -m "update data $(date +%Y-%m-%d)" || echo "no changes"
+          git push
       - name: 部署到 GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
